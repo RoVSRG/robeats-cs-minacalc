@@ -65,8 +65,6 @@ int main(int argc, char *argv[]) {
             int column_value = 1;
             int notes = 0;
 
-            std::string vis = "";
-
             for (int i = 0; i < 4; i++) {
                 bool found = false;
 
