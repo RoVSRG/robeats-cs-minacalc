@@ -29,24 +29,29 @@ struct Difficulty {
 };
 
 int main(int argc, char *argv[]) {
+    std::string input;
+
     if (argc < 2) {
-        std::cerr << "You need to supply a path to a .json file containing the map data!" << std::endl;
+        std::string line;
+
+        while (getline(std::cin, line)) {
+            input += line;
+        }
+    } else {
+        std::ifstream dataStream;
+
+        dataStream.open(argv[1]);
+
+        if (!dataStream.is_open()) {
+            std::cerr << "Could not open file!" << std::endl;
+        }
+
+        std::stringstream buf;
+        buf << dataStream.rdbuf();
+        input = buf.str();
     }
 
-    std::ifstream dataStream;
-
-    dataStream.open(argv[1]);
-
-    std::stringstream buf;
-    buf << dataStream.rdbuf();
-    std::string input = buf.str();
-
     json song = json::parse(input);
-
-    struct note {
-        int time;
-        std::vector<json> notes;
-    };
 
     std::vector<NoteInfo> noteData;
     std::vector<int> lastTracks;
